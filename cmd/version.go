@@ -23,6 +23,7 @@ SOFTWARE.
 package cmd
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"runtime"
@@ -108,5 +109,6 @@ func formatVersion(short bool) string {
 		return Short()
 	}
 
-	return fmt.Sprintf("%#v", Long())
+	out, _ := json.Marshal(Long())
+	return string(out)
 }

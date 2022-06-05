@@ -37,6 +37,7 @@ func Execute(out io.Writer) error {
 
 	rootCmd.AddCommand(newVersionCmd(out))
 	rootCmd.AddCommand(newManPagesCmd(out))
+	rootCmd.AddCommand(newCompletionCmd(out))
 
 	return rootCmd.ExecuteContext(context.Background())
 }
