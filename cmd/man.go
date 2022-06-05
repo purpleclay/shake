@@ -20,17 +20,34 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-package main
+package cmd
 
 import (
-	"log"
-	"os"
+	"fmt"
+	"io"
 
-	"github.com/purpleclay/shake/cmd"
+	mcobra "github.com/muesli/mango-cobra"
+	"github.com/muesli/roff"
+	"github.com/spf13/cobra"
 )
 
-func main() {
-	if err := cmd.Execute(os.Stdout); err != nil {
-		log.Fatal(err)
+func newManPagesCmd(out io.Writer) *cobra.Command {
+	manCmd := &cobra.Command{
+		Use:                   "man",
+		Short:                 "Generate man pages for shake",
+		DisableFlagsInUseLine: true,
+		Hidden:                true,
+		Args:                  cobra.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			mp, err := mcobra.NewManPage(1, cmd.Root())
+			if err != nil {
+				return err
+			}
+
+			_, err = fmt.Fprint(out, mp.Build(roff.NewDocument()))
+			return err
+		},
 	}
+
+	return manCmd
 }

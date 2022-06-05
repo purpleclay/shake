@@ -20,17 +20,24 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-package main
+package cmd
 
 import (
-	"log"
-	"os"
+	"context"
+	"io"
 
-	"github.com/purpleclay/shake/cmd"
+	"github.com/spf13/cobra"
 )
 
-func main() {
-	if err := cmd.Execute(os.Stdout); err != nil {
-		log.Fatal(err)
+func Execute(out io.Writer) error {
+	rootCmd := &cobra.Command{
+		Use:   "shake",
+		Short: "Shake up code generation",
 	}
+
+	rootCmd.AddCommand(newVersionCmd(out))
+	rootCmd.AddCommand(newManPagesCmd(out))
+	rootCmd.AddCommand(newCompletionCmd(out))
+
+	return rootCmd.ExecuteContext(context.Background())
 }
