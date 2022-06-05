@@ -1,3 +1,3 @@
 # shake
 
-Shake up code generation.
+Shake up project generation.
