@@ -76,6 +76,8 @@ jobs:
             ./go.mod
             ./go.sum
             ./.goreleaser.yml
+            ./Taskfile.yaml
+            ./.github/workflows/**
       - name: Code Coverage
         if: matrix.os == 'ubuntu-latest'
         uses: codecov/codecov-action@v3
