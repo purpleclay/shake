@@ -26,13 +26,24 @@ import (
 	"context"
 	"io"
 
+	tea "github.com/charmbracelet/bubbletea"
+	"github.com/purpleclay/shake/internal/parser"
+	"github.com/purpleclay/shake/internal/tui"
 	"github.com/spf13/cobra"
 )
 
 func Execute(out io.Writer) error {
 	rootCmd := &cobra.Command{
 		Use:   "shake",
-		Short: "Shake up code generation",
+		Short: "Shake up project generation",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			tp, err := parser.ReadConfig("./example.hcl")
+			if err != nil {
+				return err
+			}
+
+			return tea.NewProgram(tui.Prompts(tp)).Start()
+		},
 	}
 
 	rootCmd.AddCommand(newVersionCmd(out))
