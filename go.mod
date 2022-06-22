@@ -3,9 +3,9 @@ module github.com/purpleclay/shake
 go 1.18
 
 require (
-	github.com/muesli/mango-cobra v1.1.0
+	github.com/muesli/mango-cobra v1.2.0
 	github.com/muesli/roff v0.1.0
-	github.com/spf13/cobra v1.4.0
+	github.com/spf13/cobra v1.5.0
 )
 
 require (
